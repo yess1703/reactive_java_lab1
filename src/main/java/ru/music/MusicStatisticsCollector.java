@@ -1,7 +1,9 @@
 package ru.music;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -15,12 +17,14 @@ public final class MusicStatisticsCollector
         private long duration;
         private long plays;
         private final EnumMap<Genre, Long> genres = new EnumMap<>(Genre.class);
+        private final Map<String, Long> countries = new TreeMap<>();
 
         private void add(Track track) {
             count++;
             duration += track.durationSeconds();
             plays += track.playCount();
             genres.merge(track.genre(), 1L, Long::sum);
+            countries.merge(track.artist().country(), 1L, Long::sum);
         }
 
         private Accumulator combine(Accumulator other) {
@@ -28,11 +32,12 @@ public final class MusicStatisticsCollector
             duration += other.duration;
             plays += other.plays;
             other.genres.forEach((genre, value) -> genres.merge(genre, value, Long::sum));
+            other.countries.forEach((country, value) -> countries.merge(country, value, Long::sum));
             return this;
         }
 
         private MusicStatistics finish() {
-            return new MusicStatistics(count, duration, plays, genres);
+            return new MusicStatistics(count, duration, plays, genres, countries);
         }
     }
 
