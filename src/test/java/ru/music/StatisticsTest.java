@@ -15,13 +15,13 @@ public final class StatisticsTest {
                 new Track(1, "One", 120, 10, album.releaseDate(), Genre.ROCK, features, List.of("focus"), album),
                 new Track(2, "Two", 180, 20, album.releaseDate(), Genre.JAZZ, features, List.of("relax"), album),
                 new Track(3, "Three", 300, 30, album.releaseDate(), Genre.ROCK, features, List.of("travel"), album));
-        MusicStatistics expected = new MusicStatistics(3, 600, 60, Map.of(Genre.ROCK, 2L, Genre.JAZZ, 1L));
+        MusicStatistics expected = new MusicStatistics(3, 600, 60, Map.of(Genre.ROCK, 2L, Genre.JAZZ, 1L), Map.of("Japan", 3L));
         verifyAll(fixture, expected);
         check(expected.averageDurationSeconds() == 200.0, "Средняя длительность трека");
         System.out.println("Проверка 2 из 4. Проверяем пустую коллекцию и коллекцию из одного трека.");
-        verifyAll(List.of(), new MusicStatistics(0, 0, 0, Map.of()));
+        verifyAll(List.of(), new MusicStatistics(0, 0, 0, Map.of(), Map.of()));
         check(StatisticsCalculator.iterative(List.of()).averageDurationSeconds() == 0.0, "Средняя длительность для пустой коллекции");
-        verifyAll(List.of(fixture.get(0)), new MusicStatistics(1, 120, 10, Map.of(Genre.ROCK, 1L)));
+        verifyAll(List.of(fixture.get(0)), new MusicStatistics(1, 120, 10, Map.of(Genre.ROCK, 1L), Map.of("Japan", 1L)));
 
         System.out.println("Проверка 3 из 4. Создаём данные, проверяем их количество, уникальность, связи и расчёт на 5000 треках.");
         MusicGenerator generator = new MusicGenerator(42);
@@ -46,6 +46,10 @@ public final class StatisticsTest {
                 && t.releaseDate().equals(t.album().releaseDate())
                 && !t.tags().isEmpty()), "Допустимость характеристик и связей созданных треков");
         verifyAll(tracks, StatisticsCalculator.iterative(tracks));
+        var countries = StatisticsCalculator.iterative(tracks).tracksByCountry().keySet().stream().toList();
+        check(countries.equals(countries.stream().sorted().toList()), "Сортировка стран исполнителей");
+        check(StatisticsCalculator.iterative(tracks).tracksByCountry().values().stream().mapToLong(Long::longValue).sum() == tracks.size(),
+                "Сумма треков по странам исполнителей");
         System.out.println("Проверка 4 из 4. Убеждаемся, что неверные данные и изменение защищённых коллекций вызывают ошибки.");
         expectFailure(() -> generator.generateArtists(-1), IllegalArgumentException.class);
         expectFailure(() -> generator.generateAlbums(1, List.of()), IllegalArgumentException.class);
@@ -56,6 +60,7 @@ public final class StatisticsTest {
                 features, List.of("tag"), album), IllegalArgumentException.class);
         expectFailure(() -> fixture.get(0).tags().add("new"), UnsupportedOperationException.class);
         expectFailure(() -> expected.tracksByGenre().put(Genre.POP, 1L), UnsupportedOperationException.class);
+        expectFailure(() -> expected.tracksByCountry().put("Japan", 1L), UnsupportedOperationException.class);
         System.out.println("Все проверки пройдены: расчёты верны, генератор создаёт допустимые данные, ошибочные значения отклоняются, коллекции защищены от изменений, параллельный коллектор работает.");
     }
 

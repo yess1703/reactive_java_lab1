@@ -26,7 +26,7 @@ public final class Main {
         measurements.add("Количество треков,Способ расчёта,Номер повтора,Начало (нс),Конец (нс),Длительность (нс)");
         List<String> report = new ArrayList<>();
         // Сравниваем число треков, длительность, прослушивания и жанры
-        // Медиана-четвёртое из семи времён после сортировки от быстрого к медленному
+        // Медиана-четвёртое из семи времён после сортировки
         // Минимум-самый быстрый замер
         for (int size : new int[]{5_000, 50_000, 250_000}) {
             if (!report.isEmpty()) {
@@ -76,6 +76,9 @@ public final class Main {
             print(report, "Количество треков по жанрам:");
             expected.tracksByGenre().forEach((genre, count) ->
                     print(report, "  " + genre.displayName() + ": " + count));
+            print(report, "Количество треков по странам исполнителей:");
+            expected.tracksByCountry().forEach((country, count) ->
+                    print(report, "  " + country + ": " + count));
         }
         Path output = Path.of("results");
         Files.createDirectories(output);
