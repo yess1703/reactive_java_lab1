@@ -4,6 +4,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public final class StatisticsCalculator {
@@ -45,5 +47,35 @@ public final class StatisticsCalculator {
 
     public static MusicStatistics customCollector(List<Track> tracks) {
         return tracks.stream().collect(new MusicStatisticsCollector());
+    }
+
+    public static MusicStatistics sequential(List<Track> tracks, long delayMillis) {
+        return tracks.stream().collect(new MusicStatisticsCollector(delayMillis));
+    }
+
+    public static MusicStatistics parallel(List<Track> tracks, long delayMillis) {
+        return tracks.parallelStream().collect(new ParallelMusicStatisticsCollector(delayMillis));
+    }
+
+    public static MusicStatistics forkJoin(List<Track> tracks, long delayMillis) {
+        int parallelism = Runtime.getRuntime().availableProcessors();
+        ForkJoinPool pool = new ForkJoinPool(parallelism);
+        try {
+            return forkJoin(tracks, delayMillis, pool);
+        } finally {
+            pool.shutdown();
+            try {
+                if (!pool.awaitTermination(1, TimeUnit.MINUTES)) {
+                    pool.shutdownNow();
+                }
+            } catch (InterruptedException error) {
+                pool.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    public static MusicStatistics forkJoin(List<Track> tracks, long delayMillis, ForkJoinPool pool) {
+        return ForkJoinStatistics.collect(tracks, delayMillis, pool);
     }
 }

@@ -12,6 +12,19 @@ import java.util.stream.Collector;
 
 public final class MusicStatisticsCollector
         implements Collector<Track, MusicStatisticsCollector.Accumulator, MusicStatistics> {
+    private final long delayMillis;
+
+    public MusicStatisticsCollector() {
+        this(0L);
+    }
+
+    public MusicStatisticsCollector(long delayMillis) {
+        if (delayMillis < 0) {
+            throw new IllegalArgumentException("Задержка не может быть отрицательной");
+        }
+        this.delayMillis = delayMillis;
+    }
+
     public static final class Accumulator {
         private long count;
         private long duration;
@@ -19,15 +32,15 @@ public final class MusicStatisticsCollector
         private final EnumMap<Genre, Long> genres = new EnumMap<>(Genre.class);
         private final Map<String, Long> countries = new TreeMap<>();
 
-        private void add(Track track) {
+        void add(Track track, long delayMillis) {
             count++;
             duration += track.durationSeconds();
             plays += track.playCount();
             genres.merge(track.genre(), 1L, Long::sum);
-            countries.merge(track.artist().country(), 1L, Long::sum);
+            countries.merge(track.artist().country(delayMillis), 1L, Long::sum);
         }
 
-        private Accumulator combine(Accumulator other) {
+        Accumulator combine(Accumulator other) {
             count += other.count;
             duration += other.duration;
             plays += other.plays;
@@ -36,7 +49,7 @@ public final class MusicStatisticsCollector
             return this;
         }
 
-        private MusicStatistics finish() {
+        MusicStatistics finish() {
             return new MusicStatistics(count, duration, plays, genres, countries);
         }
     }
@@ -45,7 +58,10 @@ public final class MusicStatisticsCollector
     public Supplier<Accumulator> supplier() { return Accumulator::new; }
 
     @Override
-    public BiConsumer<Accumulator, Track> accumulator() { return Accumulator::add; }
+    public BiConsumer<Accumulator, Track> accumulator() {
+        long delay = delayMillis;
+        return (accumulator, track) -> accumulator.add(track, delay);
+    }
 
     @Override
     public BinaryOperator<Accumulator> combiner() { return Accumulator::combine; }
