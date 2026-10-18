@@ -20,4 +20,19 @@ public final class Artist {
     public long id() { return id; }
     public String name() { return name; }
     public String country() { return country; }
+
+    public String country(long delayMillis) {
+        if (delayMillis < 0) {
+            throw new IllegalArgumentException("Задержка не может быть отрицательной");
+        }
+        if (delayMillis > 0) {
+            try {
+                Thread.sleep(delayMillis);
+            } catch (InterruptedException error) {
+                Thread.currentThread().interrupt();
+                throw new IllegalStateException("Ожидание данных о стране исполнителя прервано", error);
+            }
+        }
+        return country;
+    }
 }
