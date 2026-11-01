@@ -52,20 +52,26 @@ public final class MusicGenerator {
             throw new IllegalArgumentException("Чтобы создать треки, сначала создайте хотя бы один альбом");
         }
         List<Track> tracks = new ArrayList<>(count);
-        Genre[] genres = Genre.values();
         for (int i = 0; i < count; i++) {
-            long id = ++trackId;
-            Album album = pool.get(random.nextInt(pool.size()));
-            int tagIndex = random.nextInt(TAGS.size());
-            List<String> tags = random.nextBoolean() ? List.of(TAGS.get(tagIndex))
-                    : List.of(TAGS.get(tagIndex), TAGS.get((tagIndex + 1) % TAGS.size()));
-            tracks.add(new Track(id, name("Track", id), random.nextInt(30, 901),
-                    random.nextLong(100_000_001L), album.releaseDate(),
-                    genres[random.nextInt(genres.length)],
-                    new AudioFeatures(random.nextInt(40, 221), random.nextDouble(), random.nextDouble()),
-                    tags, album));
+            tracks.add(nextTrack(pool));
         }
         return List.copyOf(tracks);
+    }
+
+    // Внутренний генератор одного трека. pool уже проверен вызывающим кодом.
+    // Позволяет Flowable создавать элементы по запросу, не собирая весь список.
+    Track nextTrack(List<Album> pool) {
+        Genre[] genres = Genre.values();
+        long id = ++trackId;
+        Album album = pool.get(random.nextInt(pool.size()));
+        int tagIndex = random.nextInt(TAGS.size());
+        List<String> tags = random.nextBoolean() ? List.of(TAGS.get(tagIndex))
+                : List.of(TAGS.get(tagIndex), TAGS.get((tagIndex + 1) % TAGS.size()));
+        return new Track(id, name("Track", id), random.nextInt(30, 901),
+                random.nextLong(100_000_001L), album.releaseDate(),
+                genres[random.nextInt(genres.length)],
+                new AudioFeatures(random.nextInt(40, 221), random.nextDouble(), random.nextDouble()),
+                tags, album);
     }
 
     private String name(String prefix, long id) {

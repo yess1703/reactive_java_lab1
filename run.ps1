@@ -17,16 +17,10 @@ if (-not $JdkPath -or -not (Test-Path -LiteralPath (Join-Path $JdkPath 'bin\java
 }
 Push-Location $PSScriptRoot
 try {
-    Write-Host 'Этап 1 из 3. Компилируем исходники Java и проверки.'
-    New-Item -ItemType Directory -Force -Path 'out' | Out-Null
-    $sources = Get-ChildItem -Path 'src\main\java','src\test\java' -Recurse -Filter '*.java' |
-        Select-Object -ExpandProperty FullName
-    & (Join-Path $JdkPath 'bin\javac.exe') --release 17 -encoding UTF-8 -d out $sources
-    if ($LASTEXITCODE -ne 0) { throw 'Не удалось скомпилировать программу' }
-    Write-Host 'Этап 2 из 3. Запускаем автоматические проверки.'
-    & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp out ru.music.StatisticsTest
-    if ($LASTEXITCODE -ne 0) { throw 'Проверки завершились с ошибкой' }
-    Write-Host 'Этап 3 из 3. Запускаем программу и сравниваем время расчётов.'
+    # Общие исходники теперь содержат RxJava: общий скрипт готовит зависимости,
+    # компилирует код и выполняет обе группы проверок без замеров JMH.
+    & (Join-Path $PSScriptRoot 'benchmark.ps1') -JdkPath $JdkPath -SkipBenchmark
+    Write-Host 'Запускаем первую лабораторную и сравниваем время расчётов.'
     & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp out ru.music.Main
     if ($LASTEXITCODE -ne 0) { throw 'Не удалось выполнить замеры' }
 } finally {

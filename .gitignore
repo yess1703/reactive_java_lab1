@@ -1,5 +1,7 @@
 /out/
 /target/
 /lib/
+/tmp/
+/output/
 /.idea/
 *.iml

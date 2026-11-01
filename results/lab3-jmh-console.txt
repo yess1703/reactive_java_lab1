@@ -1,0 +1,234 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# JMH version: 1.37
+# VM version: JDK 26.0.2.1, OpenJDK 64-Bit Server VM, 26.0.2.1+1-7
+# VM invoker: C:\Users\yess1\.jdks\openjdk-26.0.2.1\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Xms128m -Xmx256m
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 500 ms each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.music.benchmark.ReactiveStatisticsBenchmark.observable
+# Parameters: (delayMillis = 1, size = 500)
+
+# Run progress: 0,00% complete, ETA 00:00:52
+# Fork: 1 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 33,025 ms/op
+# Warmup Iteration   2: 31,332 ms/op
+# Warmup Iteration   3: 33,996 ms/op
+Iteration   1: 31,969 ms/op
+Iteration   2: 30,728 ms/op
+Iteration   3: 31,083 ms/op
+Iteration   4: 31,655 ms/op
+Iteration   5: 31,486 ms/op
+
+# Run progress: 12,50% complete, ETA 00:00:52
+# Fork: 2 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 32,008 ms/op
+# Warmup Iteration   2: 30,066 ms/op
+# Warmup Iteration   3: 28,578 ms/op
+Iteration   1: 30,904 ms/op
+Iteration   2: 32,575 ms/op
+Iteration   3: 32,259 ms/op
+Iteration   4: 31,473 ms/op
+Iteration   5: 30,044 ms/op
+
+
+Result "ru.music.benchmark.ReactiveStatisticsBenchmark.observable":
+  31,418 ±(99.9%) 1,144 ms/op [Average]
+  (min, avg, max) = (30,044, 31,418, 32,575), stdev = 0,757
+  CI (99.9%): [30,273, 32,562] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 26.0.2.1, OpenJDK 64-Bit Server VM, 26.0.2.1+1-7
+# VM invoker: C:\Users\yess1\.jdks\openjdk-26.0.2.1\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Xms128m -Xmx256m
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 500 ms each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.music.benchmark.ReactiveStatisticsBenchmark.observable
+# Parameters: (delayMillis = 1, size = 2500)
+
+# Run progress: 25,00% complete, ETA 00:00:44
+# Fork: 1 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 152,432 ms/op
+# Warmup Iteration   2: 147,816 ms/op
+# Warmup Iteration   3: 151,223 ms/op
+Iteration   1: 145,562 ms/op
+Iteration   2: 134,537 ms/op
+Iteration   3: 137,332 ms/op
+Iteration   4: 144,854 ms/op
+Iteration   5: 143,428 ms/op
+
+# Run progress: 37,50% complete, ETA 00:00:38
+# Fork: 2 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 150,443 ms/op
+# Warmup Iteration   2: 156,622 ms/op
+# Warmup Iteration   3: 145,423 ms/op
+Iteration   1: 137,958 ms/op
+Iteration   2: 142,617 ms/op
+Iteration   3: 139,335 ms/op
+Iteration   4: 146,433 ms/op
+Iteration   5: 156,230 ms/op
+
+
+Result "ru.music.benchmark.ReactiveStatisticsBenchmark.observable":
+  142,829 ±(99.9%) 9,285 ms/op [Average]
+  (min, avg, max) = (134,537, 142,829, 156,230), stdev = 6,141
+  CI (99.9%): [133,544, 152,113] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 26.0.2.1, OpenJDK 64-Bit Server VM, 26.0.2.1+1-7
+# VM invoker: C:\Users\yess1\.jdks\openjdk-26.0.2.1\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Xms128m -Xmx256m
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 500 ms each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.music.benchmark.ReactiveStatisticsBenchmark.parallel
+# Parameters: (delayMillis = 1, size = 500)
+
+# Run progress: 50,00% complete, ETA 00:00:31
+# Fork: 1 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 138,823 ms/op
+# Warmup Iteration   2: 121,333 ms/op
+# Warmup Iteration   3: 115,718 ms/op
+Iteration   1: 116,859 ms/op
+Iteration   2: 120,329 ms/op
+Iteration   3: 114,562 ms/op
+Iteration   4: 114,001 ms/op
+Iteration   5: 121,118 ms/op
+
+# Run progress: 62,50% complete, ETA 00:00:23
+# Fork: 2 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 101,801 ms/op
+# Warmup Iteration   2: 110,459 ms/op
+# Warmup Iteration   3: 116,699 ms/op
+Iteration   1: 116,083 ms/op
+Iteration   2: 116,163 ms/op
+Iteration   3: 116,947 ms/op
+Iteration   4: 118,979 ms/op
+Iteration   5: 124,945 ms/op
+
+
+Result "ru.music.benchmark.ReactiveStatisticsBenchmark.parallel":
+  117,999 ±(99.9%) 5,080 ms/op [Average]
+  (min, avg, max) = (114,001, 117,999, 124,945), stdev = 3,360
+  CI (99.9%): [112,919, 123,079] (assumes normal distribution)
+
+
+# JMH version: 1.37
+# VM version: JDK 26.0.2.1, OpenJDK 64-Bit Server VM, 26.0.2.1+1-7
+# VM invoker: C:\Users\yess1\.jdks\openjdk-26.0.2.1\bin\java.exe
+# VM options: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Xms128m -Xmx256m
+# Blackhole mode: compiler (auto-detected, use -Djmh.blackhole.autoDetect=false to disable)
+# Warmup: 3 iterations, 500 ms each
+# Measurement: 5 iterations, 1 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: ru.music.benchmark.ReactiveStatisticsBenchmark.parallel
+# Parameters: (delayMillis = 1, size = 2500)
+
+# Run progress: 75,00% complete, ETA 00:00:15
+# Fork: 1 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 599,533 ms/op
+# Warmup Iteration   2: 723,807 ms/op
+# Warmup Iteration   3: 719,796 ms/op
+Iteration   1: 665,369 ms/op
+Iteration   2: 584,025 ms/op
+Iteration   3: 666,648 ms/op
+Iteration   4: 550,124 ms/op
+Iteration   5: 531,068 ms/op
+
+# Run progress: 87,50% complete, ETA 00:00:08
+# Fork: 2 of 2
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.openjdk.jmh.util.Utils (file:/C:/Users/yess1/IdeaProjects/reactive_java_lab1/lib/jmh-core-1.37.jar)
+WARNING: Please consider reporting this to the maintainers of class org.openjdk.jmh.util.Utils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+# Warmup Iteration   1: 661,401 ms/op
+# Warmup Iteration   2: 661,272 ms/op
+# Warmup Iteration   3: 577,632 ms/op
+Iteration   1: 576,956 ms/op
+Iteration   2: 589,848 ms/op
+Iteration   3: 531,068 ms/op
+Iteration   4: 513,027 ms/op
+Iteration   5: 506,693 ms/op
+
+
+Result "ru.music.benchmark.ReactiveStatisticsBenchmark.parallel":
+  571,482 ±(99.9%) 86,898 ms/op [Average]
+  (min, avg, max) = (506,693, 571,482, 666,648), stdev = 57,478
+  CI (99.9%): [484,584, 658,381] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:01:05
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+Benchmark                               (delayMillis)  (size)  Mode  Cnt    Score    Error  Units
+ReactiveStatisticsBenchmark.observable              1     500  avgt   10   31,418 ±  1,144  ms/op
+ReactiveStatisticsBenchmark.observable              1    2500  avgt   10  142,829 ±  9,285  ms/op
+ReactiveStatisticsBenchmark.parallel                1     500  avgt   10  117,999 ±  5,080  ms/op
+ReactiveStatisticsBenchmark.parallel                1    2500  avgt   10  571,482 ± 86,898  ms/op
+
+Benchmark result is saved to results/lab3-jmh.json
+ЛР3: JMH 1.37, среднее ± погрешность, мс/полный сбор, задержка 1 мс на трек.
+Java: 26.0.2.1; ОС: Windows 10
+Доступных процессоров: 8; commonPool parallelism: 7; Observable workers: 32
+2 forks; прогрев 3 x 500 мс; измерения 5 x 1 с; JMH threads = 1.
+Observable использует больше потоков для блокирующего ожидания; это сравнение конфигураций, а не равных пулов.
+Треков | parallel, мс/op | Observable, мс/op | ускорение parallel/Observable
+500 | 117.999 ± 5.080 | 31.418 ± 1.144 | 3.756
+2500 | 571.482 ± 86.898 | 142.829 ± 9.285 | 4.001
+На обоих размерах Observable не медленнее по средним JMH: OK.

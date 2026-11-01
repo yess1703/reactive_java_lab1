@@ -1,6 +1,7 @@
 ﻿param(
     [string]$JdkPath = $env:JAVA_HOME,
-    [switch]$SkipBenchmark
+    [switch]$SkipBenchmark,
+    [switch]$Lab3
 )
 
 $ErrorActionPreference = 'Stop'
@@ -26,6 +27,8 @@ if (-not $JdkPath -or -not (Test-Path -LiteralPath (Join-Path $JdkPath 'bin\java
 }
 
 $jars = @(
+    @{ Name = 'rxjava-3.1.10.jar'; Url = 'https://repo.maven.apache.org/maven2/io/reactivex/rxjava3/rxjava/3.1.10/rxjava-3.1.10.jar' },
+    @{ Name = 'reactive-streams-1.0.4.jar'; Url = 'https://repo.maven.apache.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar' },
     @{ Name = 'jmh-core-1.37.jar'; Url = 'https://repo1.maven.org/maven2/org/openjdk/jmh/jmh-core/1.37/jmh-core-1.37.jar' },
     @{ Name = 'jmh-generator-annprocess-1.37.jar'; Url = 'https://repo1.maven.org/maven2/org/openjdk/jmh/jmh-generator-annprocess/1.37/jmh-generator-annprocess-1.37.jar' },
     @{ Name = 'jopt-simple-5.0.4.jar'; Url = 'https://repo1.maven.org/maven2/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar' },
@@ -48,12 +51,19 @@ try {
     New-Item -ItemType Directory -Force -Path 'out' | Out-Null
     $sources = Get-ChildItem -Path 'src\main\java', 'src\test\java' -Recurse -Filter '*.java' |
         Select-Object -ExpandProperty FullName
-    & (Join-Path $JdkPath 'bin\javac.exe') --release 17 -encoding UTF-8 -d out $sources
+    $classpath = (@('out') + ($jars | ForEach-Object { Join-Path 'lib' $_.Name })) -join ';'
+    & (Join-Path $JdkPath 'bin\javac.exe') --release 17 -encoding UTF-8 -cp $classpath -d out $sources
     if ($LASTEXITCODE -ne 0) { throw 'Не удалось скомпилировать программу' }
 
     Write-Host 'Этап 3 из 5. Запускаем автоматические проверки.'
-    & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp out ru.music.StatisticsTest
+    & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath ru.music.StatisticsTest
     if ($LASTEXITCODE -ne 0) { throw 'Проверки завершились с ошибкой' }
+    & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath ru.music.ReactiveStatisticsTest
+    if ($LASTEXITCODE -ne 0) { throw 'Проверки RxJava завершились с ошибкой' }
+    if ($Lab3) {
+        & (Join-Path $JdkPath 'bin\java.exe') '-Xmx128m' '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath ru.music.Lab3Main
+        if ($LASTEXITCODE -ne 0) { throw 'Проверка большого Flowable завершилась с ошибкой' }
+    }
 
     Write-Host 'Этап 4 из 5. Компилируем замеры JMH.'
     $classpath = (@('out') + ($jars | ForEach-Object { Join-Path 'lib' $_.Name })) -join ';'
@@ -74,8 +84,15 @@ try {
         return
     }
 
-    Write-Host 'Этап 5 из 5. Запускаем JMH и ищем размер, где последовательный и параллельный стримы сравниваются по времени.'
-    & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath ru.music.benchmark.BenchmarkMain
+    Write-Host 'Этап 5 из 5. Запускаем JMH.'
+    $entryPoint = if ($Lab3) { 'ru.music.benchmark.Lab3BenchmarkMain' } else { 'ru.music.benchmark.BenchmarkMain' }
+    if ($Lab3) {
+        New-Item -ItemType Directory -Force -Path 'results' | Out-Null
+        & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath $entryPoint |
+            Tee-Object -FilePath 'results/lab3-jmh-console.txt'
+    } else {
+        & (Join-Path $JdkPath 'bin\java.exe') '-Dfile.encoding=UTF-8' '-Dstdout.encoding=UTF-8' '-Dstderr.encoding=UTF-8' -cp $classpath $entryPoint
+    }
     if ($LASTEXITCODE -ne 0) { throw 'Не удалось выполнить замеры JMH' }
 } finally {
     Pop-Location
